@@ -1,0 +1,56 @@
+﻿! SW1 Configuration
+! Last configuration change at 17:43:38 UTC Sun May 11 2025
+
+hostname SW1
+
+!
+
+! Spanning Tree Configuration (Default for IOSvL2, good to note)
+spanning-tree mode pvst
+spanning-tree extend system-id
+
+!
+
+! Interface connected to SW2 (Trunk Port)
+interface GigabitEthernet0/0
+ description link to SW2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ ! negotiation auto (This is default for DTP, explicit trunk mode is better)
+ no shutdown
+
+!
+
+! Interface connected to PC1 (Access Port)
+interface GigabitEthernet0/1
+ description link to PC1
+ switchport mode access
+ ! switchport access vlan 1 (This is default, but good to explicitly state if desired)
+ ! negotiation auto (Not relevant for access mode, usually off)
+ spanning-tree portfast edge
+ no shutdown
+
+!
+
+! Unused Interfaces (Good practice to shutdown unused ports)
+interface GigabitEthernet0/2
+ negotiation auto
+ shutdown
+
+!
+
+interface GigabitEthernet0/3
+ negotiation auto
+ shutdown
+
+!
+
+! Management Interface (Typically configured with an IP for management)
+interface Vlan1
+ no ip address
+ ! Consider 'no shutdown' and an IP if you want to manage the switch over the network
+ ! shutdown (Current state)
+
+!
+
+end

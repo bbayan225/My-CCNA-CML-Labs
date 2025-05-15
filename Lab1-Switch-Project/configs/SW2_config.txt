@@ -1,0 +1,56 @@
+﻿! SW2 Configuration
+! Last configuration change at 17:48:18 UTC Sun May 11 2025
+
+hostname SW2
+
+!
+
+! Spanning Tree Configuration (Default for IOSvL2)
+spanning-tree mode pvst
+spanning-tree extend system-id
+
+!
+
+! Interface connected to SW1 (Trunk Port)
+interface GigabitEthernet0/0
+ description link to SW1  ! ا
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ ! negotiation auto
+ no shutdown
+
+!
+
+! Interface connected to PC2 (Access Port)
+interface GigabitEthernet0/1
+ description link to PC2
+ switchport mode access
+ ! switchport access vlan 1
+ ! negotiation auto
+ spanning-tree portfast edge
+ no shutdown
+
+!
+
+! Unused Interfaces
+interface GigabitEthernet0/2
+ negotiation auto
+ shutdown
+
+!
+
+
+interface GigabitEthernet0/3
+ negotiation auto
+ shutdown
+
+!
+
+! Management Interface
+interface Vlan1
+ no ip address
+ ! shutdown
+
+!
+
+end
